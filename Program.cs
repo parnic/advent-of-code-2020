@@ -4,6 +4,7 @@
    {
       static void Main(string[] args)
       {
+         var start = System.DateTime.Now;
          Q01.Go();
          Q02.Go();
          Q03.Go();
@@ -13,6 +14,8 @@
          Q07.Go();
          Q08.Go();
          Q09.Go();
+         Q10.Go();
+         System.Diagnostics.Debug.WriteLine($"Total time={(System.DateTime.Now - start).TotalMilliseconds}ms");
       }
    }
 }

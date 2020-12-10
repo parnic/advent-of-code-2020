@@ -13,9 +13,17 @@ namespace _2020
 
       public static void Go()
       {
+         var start = DateTime.Now;
          MakeList();
+         Debug.WriteLine($"Q09 MakeList took {(DateTime.Now - start).TotalMilliseconds}ms");
+         var p1start = DateTime.Now;
          Part1();
+         Debug.WriteLine($"Q09 part1 took {(DateTime.Now - p1start).TotalMilliseconds}ms");
+         var p2start = DateTime.Now;
          Part2();
+         Debug.WriteLine($"Q09 part2 took {(DateTime.Now - p2start).TotalMilliseconds}ms");
+
+         Debug.WriteLine($"Q09 took {(DateTime.Now - start).TotalMilliseconds}ms");
       }
 
       static void MakeList()
