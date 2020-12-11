@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace _2020
 {
@@ -189,6 +191,22 @@ namespace _2020
          return numOccupied;
       }
 
+      static int GetNumOccupied(SeatState[,] currState)
+      {
+         int totalNumOccupied = 0;
+         for (int i = 0; i < numRows; i++)
+         {
+            for (int j = 0; j < numCols; j++)
+            {
+               if (currState[i, j] == SeatState.Occupied)
+               {
+                  totalNumOccupied++;
+               }
+            }
+         }
+         return totalNumOccupied;
+      }
+
       static void Part1()
       {
          SeatState[,] currState = new SeatState[numRows, numCols];
@@ -196,15 +214,13 @@ namespace _2020
          Array.Copy(list, currState, numRows * numCols);
 
          int rounds = 0;
-         int totalNumOccupied = 0;
          for (int numChanges = 0; rounds == 0 || numChanges != 0; rounds++)
          {
             Array.Copy(currState, nextState, numRows * numCols);
 
-            totalNumOccupied = 0;
             numChanges = 0;
 
-            for (int i = 0; i < numRows; i++)
+            Parallel.For(0, numRows, (i) =>
             {
                for (int j = 0; j < numCols; j++)
                {
@@ -212,25 +228,20 @@ namespace _2020
                   if (currState[i, j] == SeatState.Empty && numOccupied == 0)
                   {
                      nextState[i, j] = SeatState.Occupied;
-                     numChanges++;
+                     Interlocked.Increment(ref numChanges);
                   }
                   else if (currState[i, j] == SeatState.Occupied && numOccupied >= 4)
                   {
                      nextState[i, j] = SeatState.Empty;
-                     numChanges++;
-                  }
-
-                  if (nextState[i, j] == SeatState.Occupied)
-                  {
-                     totalNumOccupied++;
+                     Interlocked.Increment(ref numChanges);
                   }
                }
-            }
+            });
 
             Array.Copy(nextState, currState, numRows * numCols);
          }
 
-         Debug.WriteLine($"Q11Part1: stabilized after {rounds - 1} rounds, total occupied={totalNumOccupied}");
+         Debug.WriteLine($"Q11Part1: stabilized after {rounds - 1} rounds, total occupied={GetNumOccupied(currState)}");
       }
 
       static void Part2()
@@ -240,15 +251,13 @@ namespace _2020
          Array.Copy(list, currState, numRows * numCols);
 
          int rounds = 0;
-         int totalNumOccupied = 0;
          for (int numChanges = 0; rounds == 0 || numChanges != 0; rounds++)
          {
             Array.Copy(currState, nextState, numRows * numCols);
 
-            totalNumOccupied = 0;
             numChanges = 0;
 
-            for (int i = 0; i < numRows; i++)
+            Parallel.For(0, numRows, (i) =>
             {
                for (int j = 0; j < numCols; j++)
                {
@@ -256,25 +265,20 @@ namespace _2020
                   if (currState[i, j] == SeatState.Empty && numOccupied == 0)
                   {
                      nextState[i, j] = SeatState.Occupied;
-                     numChanges++;
+                     Interlocked.Increment(ref numChanges);
                   }
                   else if (currState[i, j] == SeatState.Occupied && numOccupied >= 5)
                   {
                      nextState[i, j] = SeatState.Empty;
-                     numChanges++;
-                  }
-
-                  if (nextState[i, j] == SeatState.Occupied)
-                  {
-                     totalNumOccupied++;
+                     Interlocked.Increment(ref numChanges);
                   }
                }
-            }
+            });
 
             Array.Copy(nextState, currState, numRows * numCols);
          }
 
-         Debug.WriteLine($"Q11Part2: stabilized after {rounds - 1} rounds, total occupied={totalNumOccupied}");
+         Debug.WriteLine($"Q11Part2: stabilized after {rounds - 1} rounds, total occupied={GetNumOccupied(currState)}");
       }
    }
 }
