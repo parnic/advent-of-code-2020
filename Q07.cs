@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -100,7 +99,7 @@ namespace _2020
          }
 
          var result = totalContain.Distinct();
-         Debug.WriteLine($"Q07Part1: total contain={result.Count()}");
+         Util.Log($"Q07Part1: total contain={result.Count()}");
       }
 
       static int GetNumBagsContainedIn(BagType bag)
@@ -122,7 +121,7 @@ namespace _2020
 
          int bagsNeeded = GetNumBagsContainedIn(shinyGoldBag);
 
-         Debug.WriteLine($"Q07Part2: bags needed={bagsNeeded}");
+         Util.Log($"Q07Part2: bags needed={bagsNeeded}");
       }
    }
 }

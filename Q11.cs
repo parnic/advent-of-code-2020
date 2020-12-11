@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,15 +22,15 @@ namespace _2020
       {
          var start = DateTime.Now;
          MakeList();
-         Debug.WriteLine($"Q11 MakeList took {(DateTime.Now - start).TotalMilliseconds}ms");
+         Util.Log($"Q11 MakeList took {(DateTime.Now - start).TotalMilliseconds}ms");
          var p1start = DateTime.Now;
          Part1();
-         Debug.WriteLine($"Q11 part1 took {(DateTime.Now - p1start).TotalMilliseconds}ms");
+         Util.Log($"Q11 part1 took {(DateTime.Now - p1start).TotalMilliseconds}ms");
          var p2start = DateTime.Now;
          Part2();
-         Debug.WriteLine($"Q11 part2 took {(DateTime.Now - p2start).TotalMilliseconds}ms");
+         Util.Log($"Q11 part2 took {(DateTime.Now - p2start).TotalMilliseconds}ms");
 
-         Debug.WriteLine($"Q11 took {(DateTime.Now - start).TotalMilliseconds}ms");
+         Util.Log($"Q11 took {(DateTime.Now - start).TotalMilliseconds}ms");
       }
 
       static void MakeList()
@@ -241,7 +240,7 @@ namespace _2020
             Array.Copy(nextState, currState, numRows * numCols);
          }
 
-         Debug.WriteLine($"Q11Part1: stabilized after {rounds - 1} rounds, total occupied={GetNumOccupied(currState)}");
+         Util.Log($"Q11Part1: stabilized after {rounds - 1} rounds, total occupied={GetNumOccupied(currState)}");
       }
 
       static void Part2()
@@ -278,7 +277,7 @@ namespace _2020
             Array.Copy(nextState, currState, numRows * numCols);
          }
 
-         Debug.WriteLine($"Q11Part2: stabilized after {rounds - 1} rounds, total occupied={GetNumOccupied(currState)}");
+         Util.Log($"Q11Part2: stabilized after {rounds - 1} rounds, total occupied={GetNumOccupied(currState)}");
       }
    }
 }

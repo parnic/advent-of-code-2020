@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 
 namespace _2020
@@ -15,15 +14,15 @@ namespace _2020
       {
          var start = DateTime.Now;
          MakeList();
-         Debug.WriteLine($"Q09 MakeList took {(DateTime.Now - start).TotalMilliseconds}ms");
+         Util.Log($"Q09 MakeList took {(DateTime.Now - start).TotalMilliseconds}ms");
          var p1start = DateTime.Now;
          Part1();
-         Debug.WriteLine($"Q09 part1 took {(DateTime.Now - p1start).TotalMilliseconds}ms");
+         Util.Log($"Q09 part1 took {(DateTime.Now - p1start).TotalMilliseconds}ms");
          var p2start = DateTime.Now;
          Part2();
-         Debug.WriteLine($"Q09 part2 took {(DateTime.Now - p2start).TotalMilliseconds}ms");
+         Util.Log($"Q09 part2 took {(DateTime.Now - p2start).TotalMilliseconds}ms");
 
-         Debug.WriteLine($"Q09 took {(DateTime.Now - start).TotalMilliseconds}ms");
+         Util.Log($"Q09 took {(DateTime.Now - start).TotalMilliseconds}ms");
       }
 
       static void MakeList()
@@ -73,7 +72,7 @@ namespace _2020
 
          if (idx >= 0)
          {
-            Debug.WriteLine($"Q09Part1: found invalid number={list[idx]}");
+            Util.Log($"Q09Part1: found invalid number={list[idx]}");
          }
          else
          {
@@ -127,7 +126,7 @@ namespace _2020
             }
          }
 
-         Debug.WriteLine($"Q09Part2: encryption weakness={smallestInRange + largestInRange}");
+         Util.Log($"Q09Part2: encryption weakness={smallestInRange + largestInRange}");
       }
    }
 }

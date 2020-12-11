@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Text.RegularExpressions;
 
@@ -66,7 +65,7 @@ namespace _2020
             }
          }
 
-         Debug.WriteLine($"Q04Part1: num valid={numValid}");
+         Util.Log($"Q04Part1: num valid={numValid}");
       }
 
       static void Part2()
@@ -139,7 +138,7 @@ namespace _2020
             }
          }
 
-         Debug.WriteLine($"Q04Part2: num valid={numValid}");
+         Util.Log($"Q04Part2: num valid={numValid}");
       }
    }
 }

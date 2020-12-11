@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 
 namespace _2020
@@ -98,7 +97,7 @@ namespace _2020
             }
          }
 
-         Debug.WriteLine($"Q05Part1: highest id={highestId}");
+         Util.Log($"Q05Part1: highest id={highestId}");
       }
 
       static void Part2()
@@ -126,7 +125,7 @@ namespace _2020
                         throw new Exception("Found multiple seats");
                      }
 
-                     Debug.WriteLine($"Q05Part2: your seat={myId}");
+                     Util.Log($"Q05Part2: your seat={myId}");
                      foundMine = true;
                   }
 

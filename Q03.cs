@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 
 namespace _2020
@@ -60,7 +59,7 @@ namespace _2020
 
       static void Part1()
       {
-         Debug.WriteLine($"Q03Part1: num trees hit = {GetNumTrees(1, 3)}");
+         Util.Log($"Q03Part1: num trees hit = {GetNumTrees(1, 3)}");
       }
 
       static void Part2()
@@ -79,7 +78,7 @@ namespace _2020
          {
             multSum *= trees;
          }
-         Debug.WriteLine($"Q03Part2: num trees hit, multiplied = {multSum}");
+         Util.Log($"Q03Part2: num trees hit, multiplied = {multSum}");
       }
    }
 }

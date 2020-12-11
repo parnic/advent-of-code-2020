@@ -16,7 +16,16 @@
          Q09.Go();
          Q10.Go();
          Q11.Go();
-         System.Diagnostics.Debug.WriteLine($"Total time={(System.DateTime.Now - start).TotalMilliseconds}ms");
+         Util.Log($"Total time={(System.DateTime.Now - start).TotalMilliseconds}ms");
+      }
+   }
+
+   class Util
+   {
+      internal static void Log(string msg)
+      {
+         System.Diagnostics.Debug.WriteLine(msg);
+         System.Console.WriteLine(msg);
       }
    }
 }

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -63,13 +61,13 @@ namespace _2020
       static void Part1()
       {
          var sum = list.Sum(x => x.answers.Keys.Count);
-         Debug.WriteLine($"Q06Part1: sum={sum}");
+         Util.Log($"Q06Part1: sum={sum}");
       }
 
       static void Part2()
       {
          var sum = list.Sum(x => x.answers.Sum(y => y.Value == x.numInGroup ? 1 : 0));
-         Debug.WriteLine($"Q06Part2: sum={sum}");
+         Util.Log($"Q06Part2: sum={sum}");
       }
    }
 }

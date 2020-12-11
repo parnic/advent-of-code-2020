@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
@@ -82,7 +81,7 @@ namespace _2020
             throw new Exception("Exited normally - shouldn't have");
          }
 
-         Debug.WriteLine($"Q08Part1: accum value={result.Item1}");
+         Util.Log($"Q08Part1: accum value={result.Item1}");
       }
 
       static void Part2()
@@ -120,7 +119,7 @@ namespace _2020
                         throw new Exception("nothing worked");
                      }
 
-                     Debug.WriteLine($"changing {instructionToChange} to {instructionToReplace} didn't work - flipping");
+                     Util.Log($"changing {instructionToChange} to {instructionToReplace} didn't work - flipping");
                      var tmp = instructionToChange;
                      instructionToChange = instructionToReplace;
                      instructionToReplace = tmp;
@@ -144,7 +143,7 @@ namespace _2020
             }
          }
 
-         Debug.WriteLine($"Q08Part2: accum value={accum}");
+         Util.Log($"Q08Part2: accum value={accum}");
       }
    }
 }

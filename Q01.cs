@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 
 namespace _2020
@@ -39,7 +38,7 @@ namespace _2020
             {
                if (numList[i] + numList[j] == 2020)
                {
-                  Debug.WriteLine($"Q01Part1: idx {i} + idx {j} = 2020. mult = {numList[i] * numList[j]}");
+                  Util.Log($"Q01Part1: idx {i} + idx {j} = 2020. mult = {numList[i] * numList[j]}");
                   return;
                }
             }
@@ -56,7 +55,7 @@ namespace _2020
                {
                   if (numList[i] + numList[j] + numList[k] == 2020)
                   {
-                     Debug.WriteLine($"Q01Part2: idx {i} + idx {j} + idx {k} = 2020. mult = {numList[i] * numList[j] * numList[k]}");
+                     Util.Log($"Q01Part2: idx {i} + idx {j} + idx {k} = 2020. mult = {numList[i] * numList[j] * numList[k]}");
                      return;
                   }
                }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 
 namespace _2020
@@ -14,15 +13,15 @@ namespace _2020
       {
          var start = DateTime.Now;
          MakeList();
-         Debug.WriteLine($"Q10 MakeList took {(DateTime.Now - start).TotalMilliseconds}ms");
+         Util.Log($"Q10 MakeList took {(DateTime.Now - start).TotalMilliseconds}ms");
          var p1start = DateTime.Now;
          Part1();
-         Debug.WriteLine($"Q10 part1 took {(DateTime.Now - p1start).TotalMilliseconds}ms");
+         Util.Log($"Q10 part1 took {(DateTime.Now - p1start).TotalMilliseconds}ms");
          var p2start = DateTime.Now;
          Part2();
-         Debug.WriteLine($"Q10 part2 took {(DateTime.Now - p2start).TotalMilliseconds}ms");
+         Util.Log($"Q10 part2 took {(DateTime.Now - p2start).TotalMilliseconds}ms");
 
-         Debug.WriteLine($"Q10 took {(DateTime.Now - start).TotalMilliseconds}ms");
+         Util.Log($"Q10 took {(DateTime.Now - start).TotalMilliseconds}ms");
       }
 
       static void MakeList()
@@ -47,7 +46,7 @@ namespace _2020
             diffs[sortedList[i] - sortedList[i - 1] - 1]++;
          }
 
-         Debug.WriteLine($"Q10Part1: device joltage={sortedList[^1]}, diffs by 1={diffs[0]}, diffs by 3={diffs[2]}, multiplied={diffs[0] * diffs[2]}");
+         Util.Log($"Q10Part1: device joltage={sortedList[^1]}, diffs by 1={diffs[0]}, diffs by 3={diffs[2]}, multiplied={diffs[0] * diffs[2]}");
       }
 
       static void Part2()
@@ -72,7 +71,7 @@ namespace _2020
             pathsToIndices.Add(pathLen);
          }
 
-         Debug.WriteLine($"Q10Part2: combinations={pathsToIndices[^1]}");
+         Util.Log($"Q10Part2: combinations={pathsToIndices[^1]}");
       }
    }
 }
