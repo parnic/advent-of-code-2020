@@ -16,6 +16,7 @@
          Q09.Go();
          Q10.Go();
          Q11.Go();
+         Q12.Go();
          Util.Log($"Total time={(System.DateTime.Now - start).TotalMilliseconds}ms");
       }
    }
