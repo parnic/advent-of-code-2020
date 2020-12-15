@@ -34,15 +34,15 @@ namespace _2020
 
       static int GetNumAt(int turn)
       {
-         var numsSaidDict = new Dictionary<int, List<int>>();
+         var numsSaidDict = new Dictionary<int, int[]>();
 
          int lastNumSaid = 0;
-         List<int> entry = null;
+         int[] entry = null;
          for (int i = 0; i < turn; i++)
          {
             if (i < list.Count)
             {
-               numsSaidDict.Add(list[i], new List<int>() { i });
+               numsSaidDict.Add(list[i], new int[2] { i, -1 });
                lastNumSaid = list[i];
             }
             else
@@ -55,7 +55,7 @@ namespace _2020
                {
                   if (entry != null)
                   {
-                     lastNumSaid = entry.Count == 1 ? 0 : entry[^1] - entry[^2];
+                     lastNumSaid = entry[1] == -1 ? 0 : entry[0] - entry[1];
                   }
                   else
                   {
@@ -66,11 +66,19 @@ namespace _2020
                numsSaidDict.TryGetValue(lastNumSaid, out entry);
                if (entry == null)
                {
-                  entry = new List<int>();
+                  entry = new int[2] { -1, -1 };
                   numsSaidDict.Add(lastNumSaid, entry);
                }
 
-               entry.Add(i);
+               if (entry[0] == -1)
+               {
+                  entry[0] = i;
+               }
+               else
+               {
+                  entry[1] = entry[0];
+                  entry[0] = i;
+               }
             }
          }
 
