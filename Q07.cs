@@ -14,9 +14,9 @@ namespace _2020
          public List<Tuple<string, int>> ValidContents = new List<Tuple<string, int>>();
       }
 
-      static Regex bagRegex = new Regex(@"(?: contain |, )?(?<numBags>[0-9]+ )?(?<bagType>.+?) bags?", RegexOptions.Compiled);
+      static readonly Regex bagRegex = new Regex(@"(?: contain |, )?(?<numBags>[0-9]+ )?(?<bagType>.+?) bags?", RegexOptions.Compiled);
 
-      static List<BagType> list = new List<BagType>();
+      static readonly List<BagType> list = new List<BagType>();
 
       public static void Go()
       {
@@ -82,11 +82,11 @@ namespace _2020
 
       static void Part1()
       {
-         Func<List<string>, BagType, List<string>> bagAgg = (accum, bagType) =>
+         static List<string> bagAgg(List<string> accum, BagType bagType)
          {
             accum.Add(bagType.BagName);
             return accum;
-         };
+         }
 
          var directContain = GetBagsCanContain(new BagType() { BagName = "shiny gold" });
          var totalContain = directContain.Aggregate(new List<string>(), bagAgg);

@@ -21,7 +21,7 @@ namespace _2020
          public List<byte> mask = new List<byte>();
          public List<WriteInstruction> writeInstructions = new List<WriteInstruction>();
       }
-      static List<Instruction> instructions = new List<Instruction>();
+      static readonly List<Instruction> instructions = new List<Instruction>();
 
       public static void Go()
       {
@@ -64,9 +64,11 @@ namespace _2020
             {
                var inst = instructions[^1];
 
-               var writeInst = new Instruction.WriteInstruction();
-               writeInst.idx = Convert.ToUInt64(line["mem[".Length..line.IndexOf("]")]);
-               writeInst.value = Convert.ToUInt64(line[(line.IndexOf('=') + 1)..]);
+               var writeInst = new Instruction.WriteInstruction
+               {
+                  idx = Convert.ToUInt64(line["mem[".Length..line.IndexOf("]")]),
+                  value = Convert.ToUInt64(line[(line.IndexOf('=') + 1)..])
+               };
 
                inst.writeInstructions.Add(writeInst);
             }

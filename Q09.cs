@@ -6,7 +6,7 @@ namespace _2020
 {
    class Q09
    {
-      static List<long> list = new List<long>();
+      static readonly List<long> list = new List<long>();
 
       const int chunkLength = 25;
 

@@ -2,7 +2,7 @@
 {
    class Program
    {
-      static void Main(string[] args)
+      static void Main()
       {
          var start = System.DateTime.Now;
          Q01.Go();

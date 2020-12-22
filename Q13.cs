@@ -10,7 +10,7 @@ namespace _2020
    class Q13
    {
       static int leaveTime;
-      static List<int> busses = new List<int>();
+      static readonly List<int> busses = new List<int>();
 
       public static void Go()
       {
@@ -116,7 +116,9 @@ namespace _2020
       }
 
       // this is how i initially solved it. took ~30mins. i'm not proud of it, but the "real" answer apparently required specialized knowledge i did not have.
+#pragma warning disable IDE0051 // Remove unused private members
       static void Part2BruteForce()
+#pragma warning restore IDE0051 // Remove unused private members
       {
          int root = busses.First(x => x > 0);
          var sorted = busses.OrderBy(x => x);

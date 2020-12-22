@@ -8,8 +8,8 @@ namespace _2020
 {
    class Q21
    {
-      static List<Tuple<List<string>, List<string>>> list = new List<Tuple<List<string>, List<string>>>();
-      static Dictionary<string, int> ingredientCounts = new Dictionary<string, int>();
+      static readonly List<Tuple<List<string>, List<string>>> list = new List<Tuple<List<string>, List<string>>>();
+      static readonly Dictionary<string, int> ingredientCounts = new Dictionary<string, int>();
       static IEnumerable<string> allAllergens = new List<string>();
       static IEnumerable<string> allIngredients = new List<string>();
 

@@ -7,11 +7,11 @@ namespace _2020
 {
    class Q04
    {
-      static List<Dictionary<string, string>> Passports = new List<Dictionary<string, string>>();
+      static readonly List<Dictionary<string, string>> Passports = new List<Dictionary<string, string>>();
 
-      static Regex PassportRegex = new Regex(@"(?<key>[a-z]{3}):(?<val>\S+)", RegexOptions.Compiled);
-      static Regex HTMLColor = new Regex("^#[0-9a-f]{6}$", RegexOptions.Compiled);
-      static Regex PassportID = new Regex("^[0-9]{9}$", RegexOptions.Compiled);
+      static readonly Regex PassportRegex = new Regex(@"(?<key>[a-z]{3}):(?<val>\S+)", RegexOptions.Compiled);
+      static readonly Regex HTMLColor = new Regex("^#[0-9a-f]{6}$", RegexOptions.Compiled);
+      static readonly Regex PassportID = new Regex("^[0-9]{9}$", RegexOptions.Compiled);
 
       public static void Go()
       {
@@ -35,7 +35,7 @@ namespace _2020
             var matches = PassportRegex.Matches(line);
             for (int i = 0; i < matches.Count; i++)
             {
-               Passports[Passports.Count - 1].Add(matches[i].Groups["key"].Value, matches[i].Groups["val"].Value);
+               Passports[^1].Add(matches[i].Groups["key"].Value, matches[i].Groups["val"].Value);
             }
          }
       }

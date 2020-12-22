@@ -25,7 +25,7 @@ namespace _2020
             list.Add(new List<bool>());
             for (int i = 0; i < line.Length; i++)
             {
-               list[list.Count - 1].Add(line[i] != '.');
+               list[^1].Add(line[i] != '.');
             }
          }
 

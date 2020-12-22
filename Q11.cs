@@ -100,7 +100,7 @@ namespace _2020
       {
          int numOccupied = 0;
 
-         Func<int, int, bool> checkSeat = (checkRow, checkCol) =>
+         bool checkSeat(int checkRow, int checkCol)
          {
             if (seatList[checkRow, checkCol] == SeatState.Occupied)
             {
@@ -113,7 +113,7 @@ namespace _2020
             }
 
             return false;
-         };
+         }
 
          // ul
          for (int checkRow = row - 1, checkCol = col - 1; checkRow >= 0 && checkCol >= 0; checkRow--, checkCol--)

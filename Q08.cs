@@ -7,7 +7,7 @@ namespace _2020
 {
    class Q08
    {
-      static List<Tuple<string, int>> instructions = new List<Tuple<string, int>>();
+      static readonly List<Tuple<string, int>> instructions = new List<Tuple<string, int>>();
 
       public static void Go()
       {
@@ -21,7 +21,7 @@ namespace _2020
          foreach (var line in File.ReadAllLines("08input.txt"))
          {
             var parts = line.Split(' ');
-            if (parts.Count() != 2)
+            if (parts.Length != 2)
             {
                throw new Exception("malformed input");
             }

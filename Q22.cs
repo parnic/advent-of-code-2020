@@ -7,7 +7,7 @@ namespace _2020
 {
    class Q22
    {
-      static Dictionary<int, List<int>> list = new Dictionary<int, List<int>>();
+      static readonly Dictionary<int, List<int>> list = new Dictionary<int, List<int>>();
 
       public static void Go()
       {

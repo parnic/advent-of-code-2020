@@ -18,7 +18,7 @@ namespace _2020
       static Vec2 waypointPosition = new Vec2() { x = 10, y = 1 };
       static int facingDir = 90;
 
-      static List<Tuple<char, int>> instructions = new List<Tuple<char, int>>();
+      static readonly List<Tuple<char, int>> instructions = new List<Tuple<char, int>>();
 
       public static void Go()
       {
@@ -119,7 +119,7 @@ namespace _2020
          }
          else if (dir == 'L')
          {
-            facingDir = (facingDir - amount);
+            facingDir -= amount;
             while (facingDir < 0)
             {
                facingDir = 360 + facingDir;

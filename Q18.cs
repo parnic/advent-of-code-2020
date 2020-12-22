@@ -30,17 +30,12 @@ namespace _2020
 
       static long DoOp(long left, long right, char op)
       {
-         switch (op)
+         return op switch
          {
-            case '+':
-               return left + right;
-
-            case '*':
-               return left * right;
-
-            default:
-               throw new Exception("unrecognized op");
-         }
+            '+' => left + right,
+            '*' => left * right,
+            _ => throw new Exception("unrecognized op"),
+         };
       }
 
       static void Part1()

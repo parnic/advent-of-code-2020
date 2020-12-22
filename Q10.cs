@@ -6,7 +6,7 @@ namespace _2020
 {
    class Q10
    {
-      static List<long> list = new List<long>();
+      static readonly List<long> list = new List<long>();
       static List<long> sortedList = null;
 
       public static void Go()
@@ -51,8 +51,10 @@ namespace _2020
 
       static void Part2()
       {
-         var pathsToIndices = new List<long>();
-         pathsToIndices.Add(1);
+         var pathsToIndices = new List<long>
+         {
+            1
+         };
          for (int i = 1; i < sortedList.Count; i++)
          {
             long pathLen = 0;

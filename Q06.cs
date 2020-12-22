@@ -6,12 +6,12 @@ namespace _2020
 {
    class Q06
    {
-      class group
+      class Group
       {
          public int numInGroup;
          public Dictionary<char, int> answers;
       }
-      static List<group> list = new List<group>();
+      static readonly List<Group> list = new List<Group>();
 
       public static void Go()
       {
@@ -25,12 +25,12 @@ namespace _2020
          using var fs = new FileStream("06input.txt", FileMode.Open);
          using var sr = new StreamReader(fs);
          string line;
-         group entry = null;
+         Group entry = null;
          while ((line = sr.ReadLine()) != null)
          {
             if (line.Length == 0 || entry == null)
             {
-               entry = new group()
+               entry = new Group()
                {
                   numInGroup = 0,
                   answers = new Dictionary<char, int>(),

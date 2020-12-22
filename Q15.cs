@@ -6,7 +6,7 @@ namespace _2020
 {
    class Q15
    {
-      static List<int> list = new List<int>();
+      static readonly List<int> list = new List<int>();
 
       public static void Go()
       {

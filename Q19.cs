@@ -7,8 +7,8 @@ namespace _2020
 {
    class Q19
    {
-      static Dictionary<int, Rule> rules = new Dictionary<int, Rule>();
-      static List<string> messages = new List<string>();
+      static readonly Dictionary<int, Rule> rules = new Dictionary<int, Rule>();
+      static readonly List<string> messages = new List<string>();
 
       [DebuggerDisplay("ch={ch} | num rules={ruleIdxs?.Count}")]
       class Rule
@@ -141,10 +141,11 @@ namespace _2020
 
       static void Part2()
       {
-         var rulesUpdated = new Dictionary<int, Rule>(rules);
-         rulesUpdated[8] = new Rule()
+         var rulesUpdated = new Dictionary<int, Rule>(rules)
          {
-            ruleIdxs = new List<List<int>>()
+            [8] = new Rule()
+            {
+               ruleIdxs = new List<List<int>>()
             {
                new List<int>()
                {
@@ -156,10 +157,10 @@ namespace _2020
                   8,
                },
             },
-         };
-         rulesUpdated[11] = new Rule()
-         {
-            ruleIdxs = new List<List<int>>()
+            },
+            [11] = new Rule()
+            {
+               ruleIdxs = new List<List<int>>()
             {
                new List<int>()
                {
@@ -173,6 +174,7 @@ namespace _2020
                   31,
                },
             },
+            }
          };
 
          int numMatched = 0;
