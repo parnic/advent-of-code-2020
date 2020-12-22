@@ -138,6 +138,11 @@ namespace _2020
 
       static void Part2()
       {
+         gameNum = 0;
+         currLevel = 0;
+         deepestLevel = 0;
+
+
          var p1deck = new List<int>(list[1]);
          var p2deck = new List<int>(list[2]);
          var winner = PlayGame(p1deck, p2deck, recursiveGame: true);
