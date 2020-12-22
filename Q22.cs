@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
@@ -46,42 +45,25 @@ namespace _2020
          }
       }
 
-      static void Part1()
+      static string MakeHandsGUID(IEnumerable<int> p1deck, IEnumerable<int> p2deck)
       {
-         var p1deck = new List<int>(list[1]);
-         var p2deck = new List<int>(list[2]);
-         while (p1deck.Any() && p2deck.Any())
-         {
-            var p1card = p1deck.First();
-            p1deck.RemoveAt(0);
-            var p2card = p2deck.First();
-            p2deck.RemoveAt(0);
-            if (p1card > p2card)
-            {
-               p1deck.Add(p1card);
-               p1deck.Add(p2card);
-            }
-            else
-            {
-               p2deck.Add(p2card);
-               p2deck.Add(p1card);
-            }
-         }
+         return string.Join(",", string.Join("-", p1deck), string.Join("-", p2deck));
+      }
 
-         var winner = p1deck.Count == 0 ? p2deck : p1deck;
-         var score = 0;
-         for (int i = winner.Count - 1; i >= 0; i--)
-         {
-            score += (i + 1) * winner[winner.Count - i - 1];
-         }
+      static void HandleRoundWinner(bool p1Wins, ICollection<int> p1deck, ICollection<int> p2deck, int p1card, int p2card)
+      {
+         var deck = p1Wins ? p1deck : p2deck;
+         var firstCard = p1Wins ? p1card : p2card;
+         var secondCard = p1Wins ? p2card : p1card;
 
-         Util.Log($"Q22Part1: score={score}");
+         deck.Add(firstCard);
+         deck.Add(secondCard);
       }
 
       static int gameNum = 0;
       static int deepestLevel = 0;
       static int currLevel = 0;
-      static int PlayRecursiveGame(List<int> p1deck, List<int> p2deck)
+      static int PlayGame(ICollection<int> p1deck, ICollection<int> p2deck, bool recursiveGame = false)
       {
          gameNum++;
          currLevel++;
@@ -90,50 +72,39 @@ namespace _2020
             deepestLevel = currLevel;
          }
 
-         var p1prev = new List<List<int>>();
-         var p2prev = new List<List<int>>();
+         Dictionary<string, bool> prevHands = null;
          while (p1deck.Any() && p2deck.Any())
          {
-            if (p1prev.Any(x => Enumerable.SequenceEqual(p1deck, x)) && p2prev.Any(x => Enumerable.SequenceEqual(p2deck, x)))
+            if (recursiveGame)
             {
-               currLevel--;
-               return 1;
+               if (prevHands == null)
+               {
+                  prevHands = new Dictionary<string, bool>();
+               }
+
+               var guid = MakeHandsGUID(p1deck, p2deck);
+               if (prevHands.ContainsKey(guid))
+               {
+                  currLevel--;
+                  return 1;
+               }
+
+               prevHands.Add(guid, true);
             }
 
-            p1prev.Add(new List<int>(p1deck));
-            p2prev.Add(new List<int>(p2deck));
+            var p1card = p1deck.PopFront();
+            var p2card = p2deck.PopFront();
+            if (recursiveGame)
+            {
+               if (p1deck.Count >= p1card && p2deck.Count >= p2card)
+               {
+                  var winner = PlayGame(new List<int>(p1deck.Take(p1card)), new List<int>(p2deck.Take(p2card)), recursiveGame);
+                  HandleRoundWinner(winner == 1, p1deck, p2deck, p1card, p2card);
+                  continue;
+               }
+            }
 
-            var p1card = p1deck.First();
-            p1deck.RemoveAt(0);
-            var p2card = p2deck.First();
-            p2deck.RemoveAt(0);
-            if (p1deck.Count >= p1card && p2deck.Count >= p2card)
-            {
-               var winner = PlayRecursiveGame(new List<int>(p1deck.Take(p1card)), new List<int>(p2deck.Take(p2card)));
-               if (winner == 1)
-               {
-                  p1deck.Add(p1card);
-                  p1deck.Add(p2card);
-               }
-               else
-               {
-                  p2deck.Add(p2card);
-                  p2deck.Add(p1card);
-               }
-            }
-            else
-            {
-               if (p1card > p2card)
-               {
-                  p1deck.Add(p1card);
-                  p1deck.Add(p2card);
-               }
-               else
-               {
-                  p2deck.Add(p2card);
-                  p2deck.Add(p1card);
-               }
-            }
+            HandleRoundWinner(p1card > p2card, p1deck, p2deck, p1card, p2card);
          }
 
          currLevel--;
@@ -141,18 +112,38 @@ namespace _2020
          return p1deck.Any() ? 1 : 2;
       }
 
-      static void Part2()
+      static int GetScore(IEnumerable<int> winnerDeck)
       {
-         var winner = PlayRecursiveGame(list[1], list[2]);
-
          var score = 0;
-         var winnerDeck = list[winner];
-         for (int i = winnerDeck.Count - 1; i >= 0; i--)
+         var deckSize = winnerDeck.Count();
+         var idx = 0;
+         foreach (var card in winnerDeck)
          {
-            score += (i + 1) * winnerDeck[winnerDeck.Count - i - 1];
+            score += (deckSize - idx) * card;
+            idx++;
          }
 
-         Util.Log($"Q22Part2: games played={gameNum}, deepest level={deepestLevel}, score={score}");
+         return score;
+      }
+
+      static void Part1()
+      {
+         var p1deck = new List<int>(list[1]);
+         var p2deck = new List<int>(list[2]);
+         var winner = PlayGame(p1deck, p2deck);
+         var score = GetScore(winner == 1 ? p1deck : p2deck);
+
+         Util.Log($"Q22Part1: winner=p{winner}, score={score}");
+      }
+
+      static void Part2()
+      {
+         var p1deck = new List<int>(list[1]);
+         var p2deck = new List<int>(list[2]);
+         var winner = PlayGame(p1deck, p2deck, recursiveGame: true);
+         var score = GetScore(winner == 1 ? p1deck : p2deck);
+
+         Util.Log($"Q22Part2: games played={gameNum}, deepest level={deepestLevel}, winner=p{winner}, score={score}");
       }
    }
 }
