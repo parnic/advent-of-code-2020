@@ -37,21 +37,21 @@ func atol(val string) int64 {
 	return iVal
 }
 
-func msDuration(startTime time.Time) float64 {
-	return float64(time.Since(startTime)) / 1000000
+func msDuration(startTime time.Time) time.Duration {
+	return time.Since(startTime)
 }
 
 // Day16 runs day 16
 func Day16() {
 	start := time.Now()
 	makeList()
-	log.Printf("Q16MakeList took %fms\n", msDuration(start))
+	log.Printf("Q16MakeList took %s\n", msDuration(start))
 	start = time.Now()
 	part1()
-	log.Printf("Q16Part1 took %fms\n", msDuration(start))
+	log.Printf("Q16Part1 took %s\n", msDuration(start))
 	start = time.Now()
 	part2()
-	log.Printf("Q16Part2 took %fms\n", msDuration(start))
+	log.Printf("Q16Part2 took %s\n", msDuration(start))
 }
 
 func makeList() {
