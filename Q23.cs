@@ -13,15 +13,15 @@ namespace _2020
       {
          var start = DateTime.Now;
          MakeList();
-         Util.Log($"Q23 MakeList took {(DateTime.Now - start).TotalMilliseconds}ms");
+         Util.Log($"Q23 MakeList took {(DateTime.Now - start).TotalMilliseconds:N0}ms");
          var p1start = DateTime.Now;
          Part1();
-         Util.Log($"Q23 part1 took {(DateTime.Now - p1start).TotalMilliseconds}ms");
+         Util.Log($"Q23 part1 took {(DateTime.Now - p1start).TotalMilliseconds:N0}ms");
          var p2start = DateTime.Now;
          Part2();
-         Util.Log($"Q23 part2 took {(DateTime.Now - p2start).TotalMilliseconds}ms");
+         Util.Log($"Q23 part2 took {(DateTime.Now - p2start).TotalMilliseconds:N0}ms");
 
-         Util.Log($"Q23 took {(DateTime.Now - start).TotalMilliseconds}ms");
+         Util.Log($"Q23 took {(DateTime.Now - start).TotalMilliseconds:N0}ms");
       }
 
       static void MakeList()
@@ -33,53 +33,67 @@ namespace _2020
          }
       }
 
-      static int mod(int x, int m)
+      static int GetNextCup(int[] cupList, int currCup)
       {
-         int r = x;
-         if (r >= x)
+         var next = cupList[currCup];
+         if (next == 0)
          {
-            r = x % m;
+            return GetNextCup(cupList, next);
          }
-         return r < 0 ? r + m : r;
+
+         return next;
+      }
+
+      static void Solve(int[] cupList, int iterations)
+      {
+         var currentCup = cupList[0];
+         var pickedUpCups = new int[3];
+         for (int move = 0; move < iterations; move++)
+         {
+            var pickedUp = GetNextCup(cupList, currentCup);
+            var nextCup = pickedUp;
+            for (int i = 0; i < pickedUpCups.Length; i++)
+            {
+               pickedUpCups[i] = nextCup;
+               nextCup = GetNextCup(cupList, nextCup);
+            }
+
+            cupList[currentCup] = nextCup;
+
+            var destinationCup = currentCup - 1;
+            while (pickedUpCups.Contains(destinationCup) || destinationCup == 0)
+            {
+               destinationCup--;
+               if (destinationCup <= 0)
+               {
+                  destinationCup = cupList.Length - 1;
+               }
+            }
+
+            var oldDestinationNext = GetNextCup(cupList, destinationCup);
+            cupList[destinationCup] = pickedUp;
+            cupList[pickedUpCups[^1]] = oldDestinationNext;
+            currentCup = GetNextCup(cupList, currentCup);
+         }
       }
 
       static void Part1()
       {
-         var cupList = new List<int>(list);
-         var currentCupVal = cupList[0];
-         var currentCupIdx = 0;
-         var pickedUp = new int[3];
-         for (int move = 0; move < 100; move++)
+         var cupList = new int[list.Count + 1];
+         for (int i = 0, currIdx = 0; i < list.Count; i++)
          {
-            for (int i = currentCupIdx + 1, pickedUpIdx = 0; pickedUpIdx < 3; pickedUpIdx++)
-            {
-               if (i >= cupList.Count)
-               {
-                  i = 0;
-               }
-
-               pickedUp[pickedUpIdx] = cupList[i];
-               cupList.RemoveAt(i);
-            }
-
-            var destCupVal = currentCupVal - 1;
-            var destCupIdx = cupList.IndexOf(destCupVal);
-            while (destCupIdx < 0)
-            {
-               destCupVal = mod(destCupVal - 1, cupList.Count + pickedUp.Length + 1);
-               destCupIdx = cupList.IndexOf(destCupVal);
-            }
-
-            cupList.InsertRange(destCupIdx + 1, pickedUp);
-            currentCupVal = cupList[mod(cupList.IndexOf(currentCupVal) + 1, cupList.Count)];
-            currentCupIdx = cupList.IndexOf(currentCupVal);
+            cupList[currIdx] = list[i];
+            currIdx = list[i];
          }
 
-         var startIdx = cupList.IndexOf(1);
+         Solve(cupList, 100);
+
+         var cup = cupList[1];
          var scoreStr = "";
-         for (var idx = startIdx + 1; scoreStr.Length < cupList.Count - 1; idx++)
+         while (cup != 1)
          {
-            scoreStr += cupList[idx % cupList.Count].ToString();
+            scoreStr += cup.ToString();
+            cup = GetNextCup(cupList, cup);
          }
 
          Util.Log($"Q23Part1: labels={scoreStr}");
@@ -87,58 +101,25 @@ namespace _2020
 
       static void Part2()
       {
-         var cupList = new List<int>(list);
-         var highestVal = cupList.Aggregate(0, (result, curr) => curr > result ? curr : result);
-         for (int i = cupList.Count, next = highestVal + 1; i < 1000000; i++, next++)
+         var cupList = new int[1_000_001];
+         var currIdx = 0;
+         foreach (var cup in list)
          {
-            cupList.Add(next);
+            cupList[currIdx] = cup;
+            currIdx = cup;
+         }
+         var highest = cupList.First(x => cupList[x] == 0);
+         cupList[highest] = list.Count + 1;
+         for (int i = cupList[highest]; i < cupList.Length; i++)
+         {
+            cupList[i] = i == cupList.Length - 1 ? 0 : i + 1;
          }
 
-         var currentCupVal = cupList[0];
-         var currentCupIdx = 0;
-         var pickedUp = new int[3];
-         var start = DateTime.Now;
-         var lastMove = 0;
-         for (int move = 0; move < 10000000; move++)
-         {
-            for (int i = currentCupIdx + 1, pickedUpIdx = 0; pickedUpIdx < 3; pickedUpIdx++)
-            {
-               if (i >= cupList.Count)
-               {
-                  i = 0;
-               }
+         Solve(cupList, 10_000_000);
 
-               pickedUp[pickedUpIdx] = cupList[i];
-               cupList.RemoveAt(i);
-            }
-
-            var destCupVal = currentCupVal - 1;
-            var destCupIdx = cupList.IndexOf(destCupVal);
-            while (destCupIdx < 0)
-            {
-               destCupVal = mod(destCupVal - 1, cupList.Count + pickedUp.Length + 1);
-               destCupIdx = cupList.IndexOf(destCupVal);
-            }
-
-            cupList.InsertRange(destCupIdx + 1, pickedUp);
-            currentCupVal = cupList[mod(cupList.IndexOf(currentCupVal) + 1, cupList.Count)];
-            currentCupIdx = cupList.IndexOf(currentCupVal);
-
-            var dt = DateTime.Now - start;
-            var dtSeconds = dt.TotalSeconds;
-            if (dtSeconds >= 1.0)
-            {
-               start = DateTime.Now;
-               var rate = (move - lastMove) / dtSeconds;
-               lastMove = move;
-               var remainingMoves = 10000000 - move;
-               var endTime = DateTime.Now + TimeSpan.FromSeconds(remainingMoves / rate);
-               Util.Log($"Current rate: {rate:N1} mps, {remainingMoves:N} moves remaining. Should be done by {endTime}");
-            }
-         }
-
-         var oneIdx = cupList.IndexOf(1);
-         Util.Log($"Q23Part2: next two={cupList[(oneIdx + 1) % cupList.Count]}, {cupList[(oneIdx + 2) % cupList.Count]}, multiplied={1L * cupList[(oneIdx + 1) % cupList.Count] * cupList[(oneIdx + 2) % cupList.Count]}");
+         var first = cupList[1];
+         var second = cupList[first];
+         Util.Log($"Q23Part2: first={first}, second={second}, mult={1L * first * second}");
       }
    }
 }
